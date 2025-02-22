@@ -17,8 +17,13 @@ urlpatterns = [
 ]
 
 from django.urls import path
-from .views import home
+from django.contrib.auth.views import LoginView, LogoutView
+from . import views # import custom views
+
 
 urlpatterns = [
-    path("", home, name="home"),  # Home page
+    path("register/", views.register, name="register"),  # Registration page
+    path("login/", LoginView.as_view(template_name="relationship_app/login.html"), name="login"),  # Login page
+    path("logout/", LogoutView.as_view(template_name="relationship_app/logout.html"), name="logout"),  # Logout page
+    path("", views.home, name="home"),  # Home page
 ]
