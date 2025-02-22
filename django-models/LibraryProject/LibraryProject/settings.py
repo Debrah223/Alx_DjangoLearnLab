@@ -50,6 +50,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Adding authetication settings
+LOGIN_REDIRECT_URL = "home" #redirect after login
+LOGOUT_REDIRECT_URL = "login" # redirect after logout
+
 ROOT_URLCONF = 'LibraryProject.urls'
 
 TEMPLATES = [
