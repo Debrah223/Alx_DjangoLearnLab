@@ -16,7 +16,7 @@ def get_books_in_library(library_name):
 
 # Query to retrieve the librarian for a Library
 def get_librarian_for_library(library_name):
-    library = Librarian.objects.get(name=library_name).first()
+    library = Library.objects.get(name=library_name).first()
     if library:
-        return Librarian.objects.filter(library=library).first()
+        return Librarian.objects.get(library=library).first()
     return None
