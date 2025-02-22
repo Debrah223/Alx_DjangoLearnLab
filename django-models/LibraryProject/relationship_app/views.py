@@ -13,5 +13,5 @@ from .models import Library
 
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = "library_detail.html" # this will be the template we shall use to render the output
+    template_name = "relationship_app/library_detail.html" # this will be the template we shall use to render the output
     context_object_name = "library"
