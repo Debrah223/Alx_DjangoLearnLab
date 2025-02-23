@@ -27,3 +27,22 @@ class Librarian(models.Model):
 
     def __str__(self):
         return self.name
+    
+# extending user model with userprofile module 3
+from django.db import models
+from django.contrib.auth.models import User
+
+# we add user role choices
+ROLE_CHOICES = [
+    ('Admin', 'Admin'),
+    ('Librarian', 'Librarian'),
+    ('Member', 'Member'),
+]
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='Member')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.role}"
+    
