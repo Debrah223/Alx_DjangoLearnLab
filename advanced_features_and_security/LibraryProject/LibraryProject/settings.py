@@ -38,7 +38,9 @@ SESSION_COOKIE_SECURE = True  # Ensure session cookies are sent over HTTPS
 
 # Enforce HTTPS
 SECURE_SSL_REDIRECT = True  # Redirect all HTTP requests to HTTPS
-
+SECURE_HSTS_SECONDS = 31536000  # Enforce HTTPS for one year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply to all subdomains
+SECURE_HSTS_PRELOAD = True  # Allow preloading
 
 
 # Application definition
