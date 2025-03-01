@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,11 +24,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-pi90tvf51&pjrqxy)4kn851dylxl2oyi%#%#f+nr+eld28j&nv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
+# Security Headers
+SECURE_BROWSER_XSS_FILTER = True  
+X_FRAME_OPTIONS = 'DENY'  
+SECURE_CONTENT_TYPE_NOSNIFF = True  
 
+# Enforce HTTPS for cookies
+CSRF_COOKIE_SECURE = True  
+SESSION_COOKIE_SECURE = True  
+SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
+
+# Content Security Policy (Optional)
+CSP_DEFAULT_SRC = ("'self'",)  
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'") 
 # Application definition
 
 INSTALLED_APPS = [
