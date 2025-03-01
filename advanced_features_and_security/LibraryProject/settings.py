@@ -37,6 +37,10 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 CSRF_COOKIE_SECURE = True  
 SESSION_COOKIE_SECURE = True  
 SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
+SECURE_HSTS_SECONDS = 31536000  # Enforce HTTPS for one year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply to all subdomains
+SECURE_HSTS_PRELOAD = True  # Allow preloading
+
 
 # Content Security Policy (Optional)
 CSP_DEFAULT_SRC = ("'self'",)  
