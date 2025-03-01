@@ -124,3 +124,8 @@ def delete_book(request, book_id):
         book.delete()
         return redirect("book_list")
     return render(request, "relationship_app/delete_book.html", {"book": book})
+
+@permission_required('bookshelf.can_view', raise_exception=True)
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, 'bookshelf/book_list.html', {'books': books})
