@@ -10,7 +10,7 @@
         #return self.title
     
 from django.db import models   
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager, Permission
 from django.contrib.auth.models import User
 from .models import CustomUser
 
@@ -33,10 +33,16 @@ class CustomUser(AbstractUser):
      email = models.EmailField(unique=True)
      date_of_birth = models.DateField(null=True, blank=True)
      profile_photo = models.ImageField(upload_to='profile_photos/', null=True, blank=True)
-    
+     class Meta:
+        permissions = [
+            ("can_view", "Can view users"),
+            ("can_create", "Can create users"),
+            ("can_edit", "Can edit users"),
+            ("can_delete", "Can delete users"),
+        ]
 
-     USERNAME_FIELD = 'email'
-     REQUIRED_FIELDS = ['profile_photo', 'date_of_birth']
+#USERNAME_FIELD = 'email'
+#REQUIRED_FIELDS = ['profile_photo', 'date_of_birth']
     
      def __str__(self):
         return self.email
@@ -49,3 +55,4 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.email
+    
