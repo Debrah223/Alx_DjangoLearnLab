@@ -25,3 +25,12 @@ def delete_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     article.delete()
     return redirect("article_list")
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import permission_required
+from .models import Book
+
+@permission_required('bookshelf.can_view', raise_exception=True)
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, 'bookshelf/book_list.html', {'books': books})
