@@ -6,6 +6,7 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ("title", "author")
 # Register your models here.
 admin.site.register(Book)
+admin.site.register(CustomUser, CustomUserAdmin)
 
 
 from django.contrib.auth.models import Group, Permission
