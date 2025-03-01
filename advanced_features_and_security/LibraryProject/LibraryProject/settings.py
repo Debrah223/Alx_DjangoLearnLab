@@ -42,6 +42,10 @@ SECURE_HSTS_SECONDS = 31536000  # Enforce HTTPS for one year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply to all subdomains
 SECURE_HSTS_PRELOAD = True  # Allow preloading
 
+# ensures that Django recognizes requests as secure when they come through the proxy.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
 
 # Application definition
 
