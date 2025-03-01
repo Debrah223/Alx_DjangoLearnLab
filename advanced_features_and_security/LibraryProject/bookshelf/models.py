@@ -10,7 +10,23 @@
         #return self.title
     
 from django.db import models   
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import User
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, username, date_of_birth, password=None):
+        if not email:
+            raise ValueError('The Email must be filled')
+        email = self.normalize_email(email)
+        user = self.model(email=email, username=username, date_of_birth=date_of_birth)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, username, date_of_birth, password=None, **additional_attrs):
+        additional_attrs.is_staff =True
+        additional_attrs.is_superuser = True
+        return self.create_user(email, username, date_of_birth, password,)
 
 class CustomUser(AbstractUser):
      email = models.EmailField(unique=True)
