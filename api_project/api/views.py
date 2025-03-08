@@ -18,9 +18,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
-from .models import Book
-from .serializers import BookSerializer
+
+
 
 class CustomAuthToken(ObtainAuthToken):
      def post(self, request, *args, **kwargs):
