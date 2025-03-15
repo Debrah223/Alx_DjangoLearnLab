@@ -14,15 +14,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from relationship_app import views
+
 
 from django.contrib import admin
 from django.urls import path, include
 from relationship_app import views  # Import your views for error handling
 
+from django.contrib.auth.views import LoginView, LogoutView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("relationship_app.urls")),  # Ensure this app is correctly included
+    path("accounts/", include("django.contrib.auth.urls")),
+
+    path("register/", views.register, name="register"),  # Registration page
+    path("login/", LoginView.as_view(template_name="relationship_app/login.html"), name="login"),  # Login page
+    path("logout/", LogoutView.as_view(template_name="relationship_app/logout.html"), name="logout"),  # Logout page
+    path("", views.home, name="home"),  # Home page
 ]
