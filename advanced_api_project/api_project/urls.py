@@ -1,5 +1,5 @@
 """
-URL configuration for LibraryProject project.
+URL configuration for api_project project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -16,13 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from relationship_app import views
-
-from django.contrib import admin
-from django.urls import path, include
-from relationship_app import views  # Import your views for error handling
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", include("relationship_app.urls")),  # Ensure this app is correctly included
+    path('admin/', admin.site.urls),
+    path('api/', include('api.urls')), # to include API url
 ]

@@ -1,7 +1,5 @@
 from django.contrib import admin
-
-from advanced_features_and_security.LibraryProject.LibraryProject.LibraryProject.admin import CustomUserAdmin
-from .models import Book, CustomUser
+from .models import Book
 class BookAdmin(admin.ModelAdmin):
     list_display = ("title", "author", "publication_year")
     list_filter = ("publication_year")
