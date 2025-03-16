@@ -1,32 +1,36 @@
-#from django.shortcuts import render
-from rest_framework.generics import ListAPIView
-from rest_framework import viewsets
-from .models import Book
+from rest_framework import generics, permissions
 from .serializers import BookSerializer
-# Create your views here.
-class BookList(ListAPIView):
-    queryset = Book.objects.all() #to retrieve all books from the db
-    serializer_class = BookSerializer # use bookserializer to format data
+from .models import Book
 
-class BookViewSet(viewsets.ModelViewSet): # view set to CRUD operations
-    queryset = Book.objects.all() #to retrieve all books
-    serializer_class = BookSerializer #to format data using book serializer
+#we implement generic views
+class BookListView(generics.ListAPIView):
+    # we then retrieve all books
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.AllowAny] #anyone can view the books
 
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.authtoken.models import Token
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from django.contrib.auth.models import User
-from rest_framework.permissions import IsAuthenticated
+class BookDetailView(generics.RetrieveAPIView):
+    # retrieve a single book by ID
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.AllowAny] #anyone can view the details
 
+class BookCreateView(generics.CreateAPIView):
+    # to create a new book
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticated] # only autheticated user
 
+class BookUpdateView(generics.UpdateAPIView):
+    # to update existing view
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticated] #only autheticated user
 
-class CustomAuthToken(ObtainAuthToken):
-     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key, 'user_id': user.id, 'username': user.username})
-     
+class BookDeleteView(generics.DeleteAPIView):
+    # to delete a book
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticated] #only autheticated user
+    
 
