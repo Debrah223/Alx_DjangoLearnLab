@@ -9,7 +9,7 @@ class BookAPITestCase(APITestCase):
     def setUp(self):
         """ Set up test user and sample book data """
         self.user = User.objects.create_user(username="testuser", password="password123")
-        self.client.force_authenticate(user=self.user)
+        self.client.login(user=self.user)
 
         self.book = Book.objects.create(
             title="Test Book",
