@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Post, Comment
 from taggit.forms import TagWidget
+
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
-
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
@@ -15,7 +15,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ["title", "content", "tags"]  # Exclude 'author' because it's set automatically
         widgets = {
-            "tags": TagWidget(attrs={"class": "form-control", "placeholder": "Add tags separated by commas"}),
+            "tags": TagWidget(),
         }
 
     def save(self, commit=True):
