@@ -11,10 +11,6 @@ class UserRegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 class PostForm(forms.ModelForm):
-    tags = forms.CharField(
-        required=False,
-        help_text="Enter tags separated by commas",
-    )
     class Meta:
         model = Post
         fields = ["title", "content", "tags"]  # Exclude 'author' because it's set automatically
