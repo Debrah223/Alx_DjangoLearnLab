@@ -9,6 +9,7 @@ from .views import (
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
 from django.urls import path, include
+from .views import PostByTagListView
 from .views import (
     PostListView,
     PostDetailView,
@@ -43,4 +44,5 @@ urlpatterns = [
     path('search/', search_posts, name='search-posts'),
     # URL for tagged posts
     path('tag/<str:tag_name>/', tagged_posts, name='tagged-posts'),
+    path("tags/<slug:tag_slug>/", PostByTagListView.as_view(), name="posts-by-tag")
 ]
