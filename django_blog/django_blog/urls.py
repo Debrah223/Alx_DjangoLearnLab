@@ -17,7 +17,6 @@ Including another URLconf
 
 from django.urls import path
 from blog .views import home
-from . import views
 
 urlpatterns = [
     path('', home, name='home'),

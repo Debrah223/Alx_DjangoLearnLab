@@ -52,11 +52,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'django_blog.urls'
+LOGIN_URL = 'login'  # Redirect unauthenticated users to the login page
+
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'bolg/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'blog/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
