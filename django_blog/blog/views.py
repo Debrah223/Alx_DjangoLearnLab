@@ -1,13 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
 
+
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from .models import Post
-from .forms import PostForm  # Import the form
+from .models import Post, Comment
+from .forms import PostForm, CommentForm # Import the form
 
 # Create your views here.
 def home(request):
@@ -73,3 +74,19 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author  # Only authors can delete their posts
+
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comments = post.comments.all().order_by("-created_at")  # Fetch comments for this post
+    form = CommentForm()
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect("post-detail", pk=post.pk)  # Redirect to the same post detail page
+
+    return render(request, "blog/post_detail.html", {"post": post, "comments": comments, "form": form})

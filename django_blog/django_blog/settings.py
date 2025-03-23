@@ -79,12 +79,15 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  
+        'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'your_database_name',
-        'USER': 'your_database_user',  
-        'PASSWORD': 'your_database_password',
-        'HOST': 'localhost',  # database host
-        'PORT': '5432',  # Default for PostgreSQL,
+        'USER': 'root',  
+        'PASSWORD': 'Rockitwell@30',
+        'HOST': '127.0.0.1',  # database host
+        'PORT': '3306',  # Default for mySQL,
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
