@@ -20,6 +20,12 @@
     <ul>
         {% for comment in comments %}
             <li>
+                <p><strong>Tags:</strong>
+                    {% for tag in post.tags.all %}
+                        <a href="{% url 'tagged-posts' tag.name %}">#{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                
                 <strong>{{ comment.author }}</strong> - {{ comment.created_at|date:"F j, Y, g:i a" }}
                 <p>{{ comment.content }}</p>
 

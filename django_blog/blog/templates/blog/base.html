@@ -30,3 +30,8 @@
     </div>
 </body>
 </html>
+
+<form action="{% url 'search-posts' %}" method="GET">
+    <input type="text" name="q" placeholder="Search blog posts..." value="{{ query }}">
+    <button type="submit">Search</button>
+</form>

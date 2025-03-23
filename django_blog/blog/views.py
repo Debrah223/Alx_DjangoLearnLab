@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from .models import Post, Comment
+from .models import Post, Comment, Tag
 from .forms import PostForm, CommentForm # Import the form
 
 # Create your views here.
@@ -128,3 +129,18 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return self.object.post.get_absolute_url()  # Redirect back to the post detail page
+    
+    def search_posts(request):
+        query = request.GET.get('q')
+        posts = Post.objects.filter(
+        Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)
+    ).distinct()
+
+        return render(request, 'blog/search_results.html', {'query': query, 'posts': posts})
+
+    
+    def tagged_posts(request, tag_name):
+        tag = get_object_or_404(Tag, name=tag_name)
+        posts = Post.objects.filter(tags=tag)
+
+        return render(request, 'blog/tagged_posts.html', {'tag': tag, 'posts': posts})

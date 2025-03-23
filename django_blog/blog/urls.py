@@ -1,5 +1,6 @@
 from django.urls import path
 from blog import views
+from .views import search_posts, tagged_posts
 from .views import (
     CommentCreateView, 
     CommentUpdateView, 
@@ -38,4 +39,8 @@ urlpatterns = [
 
     # URL for deleting an existing comment
     path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment-delete"),
+    # URL pattern for search
+    path('search/', search_posts, name='search-posts'),
+    # URL for tagged posts
+    path('tag/<str:tag_name>/', tagged_posts, name='tagged-posts'),
 ]
