@@ -58,5 +58,7 @@ class UserFeedView(generics.ListAPIView):
         # Get the currently authenticated user
         user = self.request.user
         # Get the posts from users the current user follows, ordered by newest first
+        following_users = user.following.all()  
+         # Filter posts where the author is in the list of followed users, ordered by newest first
         return Post.objects.filter(author__in=user.following.all()).order_by('-created_at')
 
