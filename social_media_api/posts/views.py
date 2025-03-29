@@ -1,10 +1,12 @@
 from django.shortcuts import render
-from rest_framework import viewsets, permissions, filters
+from rest_framework import viewsets, permissions, filters, generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from django_filters.rest_framework import DjangoFilterBackend
+from django.contrib.auth import get_user_model
+
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
     """
@@ -42,4 +44,19 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)  # Assign the logged-in user as the author
+
+User = get_user_model()
+
+class UserFeedView(generics.ListAPIView):
+    """
+    API endpoint that returns a feed of posts from followed users.
+    """
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Get the currently authenticated user
+        user = self.request.user
+        # Get the posts from users the current user follows, ordered by newest first
+        return Post.objects.filter(author__in=user.following.all()).order_by('-created_at')
 

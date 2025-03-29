@@ -22,6 +22,13 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, style={'input_type': 'password'})
 
 class UserSerializer(serializers.ModelSerializer):
+    followers_count = serializers.IntegerField(source='followers.count', read_only=True)
+    following_count = serializers.IntegerField(source='following.count', read_only=True)
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'bio', 'profile_picture', 'followers']
+        fields = ['id', 'username', 'email', 'bio', 'profile_picture', 'followers_count', 'following_count']
+
+class FollowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username']
