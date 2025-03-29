@@ -22,4 +22,5 @@ urlpatterns = [
     path('', home, name='home'),  # Default homepage route
     path('admin/', admin.site.urls),
     path('api/accounts/', include('accounts.urls')),
+    path('api/', include('posts.urls')),  # Include post & comment API routes
 ]
