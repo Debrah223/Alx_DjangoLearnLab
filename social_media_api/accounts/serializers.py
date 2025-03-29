@@ -12,7 +12,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'password']
 
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
+        user = User.objects.create_user(**validated_data) # Ensure create_user is used
         Token.objects.create(user=user)  # Generate token upon registration
         return user
 
