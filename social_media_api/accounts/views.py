@@ -128,3 +128,12 @@ class FollowingListView(generics.ListAPIView):
     def get_queryset(self):
         user_id = self.kwargs['user_id']
         return User.objects.get(id=user_id).following.all()
+    
+CustomUser = get_user_model() 
+class UserListView(generics.ListAPIView):
+    """
+    API endpoint to list all users.
+    """
+    queryset = CustomUser.objects.all()  # Ensure CustomUser.objects.all() is referenced
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
